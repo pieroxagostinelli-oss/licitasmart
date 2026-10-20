@@ -176,6 +176,7 @@ function mapTender(row) {
     deadlineDays: daysUntil(row.fecha_cierre),
     deadline: formatDate(row.fecha_cierre),
     publishDate: formatDate(row.fecha_publicacion),
+    rawPublishDate: row.fecha_publicacion,
     tenderType: row.tipo_licitacion || "No informado",
     status: row.estado || "No informado",
     description: row.descripcion || "Sin descripción disponible.",
@@ -191,12 +192,66 @@ function scoreClass(score) {
   return "low";
 }
 
+function isToday(dateString) {
+  if (!dateString) return false;
+  const d = new Date(dateString);
+  const now = new Date();
+
+  return d.getFullYear() === now.getFullYear()
+    && d.getMonth() === now.getMonth()
+    && d.getDate() === now.getDate();
+}
+
+function compactMoneyCLP(amount) {
+  const n = Number(amount || 0);
+
+  if (n >= 1_000_000_000) {
+    return `$${(n / 1_000_000_000).toLocaleString("es-CL", {
+      maximumFractionDigits: 2
+    })} mil MM`;
+  }
+
+  if (n >= 1_000_000) {
+    return `$${(n / 1_000_000).toLocaleString("es-CL", {
+      maximumFractionDigits: 1
+    })} MM`;
+  }
+
+  return money(n);
+}
+
 function updateStats(items) {
   const active = document.getElementById("statActive");
+  const today = document.getElementById("statToday");
   const high = document.getElementById("statHigh");
+  const amount = document.getElementById("statAmount");
+  const heroBestScore = document.getElementById("heroBestScore");
+  const heroBestLabel = document.getElementById("heroBestLabel");
+
+  const totalAmount = items.reduce((sum, t) => {
+    return sum + (Number.isFinite(Number(t.budget)) ? Number(t.budget) : 0);
+  }, 0);
+
+  const newToday = items.filter(t => isToday(t.rawPublishDate)).length;
+  const highMatches = items.filter(t => t.score >= 90).length;
+  const best = items.length
+    ? items.reduce((a, b) => (b.score > a.score ? b : a))
+    : null;
 
   if (active) active.textContent = items.length;
-  if (high) high.textContent = items.filter(t => t.score >= 90).length;
+  if (today) today.textContent = newToday;
+  if (high) high.textContent = highMatches;
+  if (amount) amount.textContent = compactMoneyCLP(totalAmount);
+
+  if (heroBestScore) {
+    heroBestScore.textContent = best ? `${best.score}%` : "--%";
+  }
+
+  if (heroBestLabel) {
+    heroBestLabel.textContent = best
+      ? `Mejor oportunidad: ${best.id}`
+      : "Sin oportunidades disponibles";
+  }
 }
 
 function render(items) {
