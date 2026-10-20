@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LicitaSmart Chile - Buscador inteligente de licitaciones públicas" />
+  <title>LicitaSmart Chile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">LS</div>
+        <div>
+          <strong>LicitaSmart</strong>
+          <span>Chile</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-section="dashboard">⌂ <span>Inicio</span></button>
+        <button class="nav-item" data-section="buscar">⌕ <span>Buscar licitaciones</span></button>
+        <button class="nav-item" data-section="favoritos">★ <span>Favoritos</span></button>
+        <button class="nav-item" data-section="alertas">🔔 <span>Alertas</span></button>
+        <button class="nav-item" data-section="perfil">◎ <span>Perfil empresa</span></button>
+      </nav>
+
+      <div class="sidebar-card">
+        <span class="eyebrow">PRÓXIMAMENTE</span>
+        <strong>Análisis con IA</strong>
+        <p>Revisión automática de bases, requisitos y compatibilidad.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span>Mercado Público + ChileCompra</span>
+        <small>Prototipo visual v1.0</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div>
+          <h1>Oportunidades para tu empresa</h1>
+          <p>Encuentra licitaciones que realmente calzan con tu negocio.</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" title="Notificaciones">🔔</button>
+          <div class="avatar">FA</div>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">BUSCADOR INTELIGENTE</span>
+          <h2>Encuentra mejores licitaciones, más rápido.</h2>
+          <p>Filtra por región, presupuesto, rubro y compatibilidad. Guarda oportunidades y prioriza las más atractivas.</p>
+        </div>
+        <div class="hero-badge">
+          <span>Compatibilidad</span>
+          <strong>96%</strong>
+          <small>Mejor oportunidad detectada</small>
+        </div>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon">📌</div>
+          <div><span>Activas compatibles</span><strong id="statActive">43</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div><span>Nuevas hoy</span><strong>12</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div><span>Sobre 90%</span><strong id="statHigh">7</strong></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div><span>Monto detectado</span><strong>$2.480 MM</strong></div>
+        </article>
+      </section>
+
+      <section class="search-panel" id="buscar">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">BÚSQUEDA AVANZADA</span>
+            <h3>¿Qué estás buscando?</h3>
+          </div>
+          <button class="ghost-btn" id="clearFilters">Limpiar filtros</button>
+        </div>
+
+        <div class="main-search">
+          <span>⌕</span>
+          <input id="queryInput" type="text" placeholder="Ej: construcción, pavimentación, estructuras metálicas..." />
+          <button class="primary-btn" id="searchBtn">Buscar</button>
+        </div>
+
+        <div class="filters-grid">
+          <label>
+            Región
+            <select id="regionFilter">
+              <option value="">Todas las regiones</option>
+              <option>Metropolitana</option>
+              <option>Valparaíso</option>
+              <option>O'Higgins</option>
+              <option>Maule</option>
+              <option>Ñuble</option>
+              <option>Biobío</option>
+            </select>
+          </label>
+
+          <label>
+            Rubro
+            <select id="categoryFilter">
+              <option value="">Todos los rubros</option>
+              <option>Construcción</option>
+              <option>Obras civiles</option>
+              <option>Estructuras metálicas</option>
+              <option>Mantención</option>
+              <option>Servicios profesionales</option>
+            </select>
+          </label>
+
+          <label>
+            Presupuesto mínimo
+            <input id="minBudget" type="number" placeholder="$ 0" />
+          </label>
+
+          <label>
+            Presupuesto máximo
+            <input id="maxBudget" type="number" placeholder="$ 500.000.000" />
+          </label>
+
+          <label>
+            Compatibilidad mínima
+            <select id="scoreFilter">
+              <option value="0">Todas</option>
+              <option value="70">70% o más</option>
+              <option value="80">80% o más</option>
+              <option value="90">90% o más</option>
+            </select>
+          </label>
+
+          <label>
+            Fecha de cierre
+            <select id="deadlineFilter">
+              <option value="">Cualquier fecha</option>
+              <option value="7">Próximos 7 días</option>
+              <option value="15">Próximos 15 días</option>
+              <option value="30">Próximos 30 días</option>
+            </select>
+          </label>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="results-column">
+          <div class="results-header">
+            <div>
+              <span id="resultCount">6 oportunidades encontradas</span>
+              <small>Ordenadas por compatibilidad</small>
+            </div>
+            <select id="sortSelect" class="compact-select">
+              <option value="score">Mayor compatibilidad</option>
+              <option value="budget-desc">Mayor presupuesto</option>
+              <option value="budget-asc">Menor presupuesto</option>
+              <option value="deadline">Cierre más próximo</option>
+            </select>
+          </div>
+
+          <div id="tendersList" class="tenders-list"></div>
+        </div>
+
+        <aside class="right-column">
+          <div class="insight-card">
+            <span class="eyebrow">RESUMEN</span>
+            <h3>Tu perfil de búsqueda</h3>
+            <div class="insight-row"><span>Regiones</span><strong>RM, Valparaíso</strong></div>
+            <div class="insight-row"><span>Rubro principal</span><strong>Construcción</strong></div>
+            <div class="insight-row"><span>Rango</span><strong>$20M – $500M</strong></div>
+            <div class="insight-row"><span>Alerta activa</span><strong class="success-text">Sí</strong></div>
+            <button class="secondary-btn full">Editar perfil</button>
+          </div>
+
+          <div class="tip-card">
+            <div class="tip-icon">💡</div>
+            <div>
+              <strong>Consejo</strong>
+              <p>Prioriza oportunidades con más de 85% de compatibilidad y al menos 7 días antes del cierre.</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal">
+      <button class="modal-close" id="modalClose">×</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
